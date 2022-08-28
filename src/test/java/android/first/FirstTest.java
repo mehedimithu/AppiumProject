@@ -3,6 +3,7 @@ package android.first;
 import baseclass.Base;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -20,6 +21,10 @@ public class FirstTest extends Base {
         */
 
         driver.findElement(By.xpath("(//android.widget.RelativeLayout)[2]")).click();
+        String alertTitle = driver.findElement(By.id("android:id/alertTitle")).getText();
+        Assert.assertEquals(alertTitle, "WiFi settings");
+        System.out.println("Alert Title"+" "+alertTitle);
+
         driver.findElement(By.id("android:id/edit")).sendKeys("SunnySide");
         List<MobileElement> index = driver.findElements(By.className("android.widget.Button"));
         index.get(1).click();
