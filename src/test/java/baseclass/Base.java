@@ -5,6 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
+import org.openqa.selenium.DeviceRotation;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -21,6 +22,7 @@ public class Base {
     //Appium server start
     public AppiumDriverLocalService service;
     public boolean canScrollMore;
+    public DeviceRotation deviceRotation;
 
     @BeforeClass
     public void appiumConfig() throws MalformedURLException {
