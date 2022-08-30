@@ -80,6 +80,15 @@ public class Base {
 
     }
 
+    public void dragDropAction(WebElement source, int endX, int endY){
+        ((JavascriptExecutor) driver).executeScript("mobile: dragGesture", ImmutableMap.of(
+                "elementId", ((RemoteWebElement) source).getId(),
+                "endX", endX,
+                "endY", endY
+        ));
+
+    }
+
     @AfterClass
     public void tearDown() {
         if (null != driver) {
