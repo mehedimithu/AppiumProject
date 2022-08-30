@@ -1,9 +1,14 @@
 package baseclass;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -15,6 +20,7 @@ public class Base {
     public AppiumDriver driver;
     //Appium server start
     public AppiumDriverLocalService service;
+    public boolean canScrollMore;
 
     @BeforeClass
     public void appiumConfig() throws MalformedURLException {
@@ -35,6 +41,42 @@ public class Base {
         driver = new AppiumDriver<MobileElement>(uri, caps);
 //        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+    }
+
+    public void longPressAction(MobileElement element) {
+        ((JavascriptExecutor) driver).executeScript("mobile: longClickGesture",
+                ImmutableMap.of("elementId", ((RemoteWebElement) element).getId(),
+                        "duration", 2000));
+    }
+
+    public void scrollDown() {
+        driver.findElement(MobileBy.AndroidUIAutomator(
+                "new UiScrollable(new UiSelector()).scrollIntoView(text(\"WebView\"));"));
+    }
+
+    public void scrollToEnd() {
+        do {
+            canScrollMore = (Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
+                    ImmutableMap.builder()
+                            .put("left", 100)
+                            .put("top", 100)
+                            .put("width", 200)
+                            .put("height", 200)
+                            .put("direction", "down")
+                            .put("percent", 3.0)
+                            .build());
+
+
+        } while (canScrollMore);
+    }
+
+    public void swipeAction(WebElement element, String direction) {
+        ((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of(
+                "elementId", ((RemoteWebElement) element).getId(),
+                "direction", direction,
+                "percent", 0.75
+        ));
 
     }
 
