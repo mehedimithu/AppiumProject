@@ -1,7 +1,7 @@
 package android.first;
 
 import baseclass.Base;
-import io.appium.java_client.clipboard.HasClipboard;
+import io.appium.java_client.android.Activity;
 import org.openqa.selenium.By;
 import org.openqa.selenium.DeviceRotation;
 import org.openqa.selenium.Keys;
@@ -34,6 +34,17 @@ public class MiscellaneousActions extends Base {
         driver.getKeyboard().sendKeys(Keys.ENTER);
 
 
+    }
+
+    @Test
+    public void miscellaneousActivities2(){
+
+      /*  How to find appPackage and appActivity:
+        Mac: adb shell dumpsys window | grep -E 'mCurrentFocus'
+        Windows: adb shell dumpsys window | find "mCurrentFocus"*/
+
+        activity = new Activity("io.appium.android.apis", "io.appium.android.apis.view.Gallery1");
+        //driver.startActivity(activity);
     }
 
 }
